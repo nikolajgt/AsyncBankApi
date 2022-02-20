@@ -1,0 +1,31 @@
+﻿
+Functions i need to look at:
+
+
+
+	Fix in Services:
+		- User / Admin service:						Need to fix Loan checker and rki chekcer functions. it works max 2-3 times and stops for unknown reason
+
+
+
+
+
+
+    
+            
+            try
+            {
+                _bankRepository.Entry(await _bankRepository.Users.FirstOrDefaultAsync(x => x.UserID == user.UserID)).CurrentValues.SetValues(user);
+                return (await _bankRepository.SaveChangesAsync()) > 0;
+            }
+            catch (Exception e)
+            {
+                return false;
+                Console.WriteLine(e.Message);
+            }
+
+
+
+            Til imorgen:
+                -Fix payback on loan
+                -Fix den lange dato når det bliver vist
