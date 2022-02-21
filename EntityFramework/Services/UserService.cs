@@ -27,7 +27,7 @@ namespace EntityFramework.Services
             var test = new Transactions(userFrom.Balance, money, userTo.UserID, userFrom.UserID);
 
 
-            _repository.AddTransactions(test);
+            await _repository.AddTransactions(test);
             return await _repository.AccountMoneyTransfer(modelUser);
         }
 
@@ -49,10 +49,6 @@ namespace EntityFramework.Services
         {
             var response =  await _repository.GetAllUserData(userid);
             var loan = response.Loans.OrderBy(x => x.LoanID).ToList();
-            foreach(var i in loan)
-            {
-                Console.WriteLine(i.LoanID);
-            }
 
             switch (loanid)
             {
