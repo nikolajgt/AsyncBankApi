@@ -1,36 +1,45 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace EntityFramework.Migrations
 {
-    public partial class sql : Migration
+    public partial class Mssql : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AlterDatabase()
+                .Annotation("MySql:CharSet", "utf8mb4");
+
             migrationBuilder.CreateTable(
                 name: "Banks",
                 columns: table => new
                 {
                     BankID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    BankIdentifier = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BankName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    HeadQuartersAddress = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    BankIdentifier = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    BankName = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    HeadQuartersAddress = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Banks", x => x.BankID);
-                });
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "Location",
                 columns: table => new
                 {
                     SubLocationID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    SubLocationName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    SubLocationName = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     BankID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -41,17 +50,23 @@ namespace EntityFramework.Migrations
                         column: x => x.BankID,
                         principalTable: "Banks",
                         principalColumn: "BankID");
-                });
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
-                    UserID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Firstname = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Lastname = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Username = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserID = table.Column<string>(type: "varchar(95)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Firstname = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Lastname = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Username = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Password = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     Balance = table.Column<int>(type: "int", nullable: true),
                     BankID = table.Column<int>(type: "int", nullable: false)
                 },
@@ -64,19 +79,21 @@ namespace EntityFramework.Migrations
                         principalTable: "Banks",
                         principalColumn: "BankID",
                         onDelete: ReferentialAction.Cascade);
-                });
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "Loans",
                 columns: table => new
                 {
                     LoanID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Issued = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Expire = table.Column<DateTime>(type: "datetime2", nullable: true),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Issued = table.Column<DateTime>(type: "datetime", nullable: true),
+                    Expire = table.Column<DateTime>(type: "datetime", nullable: true),
                     PayBackBalance = table.Column<int>(type: "int", nullable: true),
                     TotalLoanOfMoney = table.Column<int>(type: "int", nullable: true),
-                    UserID = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    UserID = table.Column<string>(type: "varchar(95)", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
@@ -86,22 +103,28 @@ namespace EntityFramework.Migrations
                         column: x => x.UserID,
                         principalTable: "Users",
                         principalColumn: "UserID");
-                });
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "RefreshToken",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Token = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Expires = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedByIp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Revoked = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    RevokedByIp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ReplaceByToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UsersUserID = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Token = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Expires = table.Column<DateTime>(type: "datetime", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime", nullable: false),
+                    CreatedByIp = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Revoked = table.Column<DateTime>(type: "datetime", nullable: true),
+                    RevokedByIp = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ReplaceByToken = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    UsersUserID = table.Column<string>(type: "varchar(95)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
@@ -112,20 +135,22 @@ namespace EntityFramework.Migrations
                         principalTable: "Users",
                         principalColumn: "UserID",
                         onDelete: ReferentialAction.Cascade);
-                });
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "Rki",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     LoanID = table.Column<int>(type: "int", nullable: true),
-                    Issued = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Expire = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Issued = table.Column<DateTime>(type: "datetime", nullable: true),
+                    Expire = table.Column<DateTime>(type: "datetime", nullable: true),
                     PayBackBalance = table.Column<int>(type: "int", nullable: true),
                     TotalLoanOfMoney = table.Column<int>(type: "int", nullable: true),
-                    UserID = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    UserID = table.Column<string>(type: "varchar(95)", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
@@ -135,18 +160,21 @@ namespace EntityFramework.Migrations
                         column: x => x.UserID,
                         principalTable: "Users",
                         principalColumn: "UserID");
-                });
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "SubBankAccounts",
                 columns: table => new
                 {
                     SubBankAccountID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    SubAccountName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    SubAccountName = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     Balance = table.Column<int>(type: "int", nullable: true),
                     SubBankAccountType = table.Column<int>(type: "int", nullable: false),
-                    UsersUserID = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    UsersUserID = table.Column<string>(type: "varchar(95)", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
@@ -156,19 +184,24 @@ namespace EntityFramework.Migrations
                         column: x => x.UsersUserID,
                         principalTable: "Users",
                         principalColumn: "UserID");
-                });
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "Transactions",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    money = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    balance = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    reciver = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    userID = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    money = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    balance = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    reciver = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    date = table.Column<DateTime>(type: "datetime", nullable: false),
+                    userID = table.Column<string>(type: "varchar(95)", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
@@ -178,7 +211,8 @@ namespace EntityFramework.Migrations
                         column: x => x.userID,
                         principalTable: "Users",
                         principalColumn: "UserID");
-                });
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Loans_UserID",

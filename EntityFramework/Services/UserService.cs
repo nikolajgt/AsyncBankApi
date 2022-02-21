@@ -48,7 +48,7 @@ namespace EntityFramework.Services
         public async Task<bool> PayBackLoan(int loanid, int balance, string userid)
         {
             var response =  await _repository.GetAllUserData(userid);
-            var loan = response.Loans.OrderByDescending(x => x.Expire).ToList();
+            var loan = response.Loans.OrderBy(x => x.LoanID).ToList();
             foreach(var i in loan)
             {
                 Console.WriteLine(i.LoanID);

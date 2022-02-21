@@ -3,7 +3,6 @@ using System;
 using EntityFramework.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
@@ -12,17 +11,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EntityFramework.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20220218225753_sql")]
-    partial class sql
+    [Migration("20220221064504_Mssql")]
+    partial class Mssql
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "6.0.2")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
-
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("EntityFramework.Models.Bank", b =>
                 {
@@ -30,16 +27,14 @@ namespace EntityFramework.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("BankID"), 1L, 1);
-
                     b.Property<string>("BankIdentifier")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("BankName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("HeadQuartersAddress")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.HasKey("BankID");
 
@@ -52,13 +47,11 @@ namespace EntityFramework.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("LoanID"), 1L, 1);
-
                     b.Property<DateTime?>("Expire")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<DateTime?>("Issued")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<int?>("PayBackBalance")
                         .HasColumnType("int");
@@ -67,7 +60,7 @@ namespace EntityFramework.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("UserID")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(95)");
 
                     b.HasKey("LoanID");
 
@@ -82,13 +75,11 @@ namespace EntityFramework.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("SubLocationID"), 1L, 1);
-
                     b.Property<int?>("BankID")
                         .HasColumnType("int");
 
                     b.Property<string>("SubLocationName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.HasKey("SubLocationID");
 
@@ -103,13 +94,11 @@ namespace EntityFramework.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"), 1L, 1);
-
                     b.Property<DateTime?>("Expire")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<DateTime?>("Issued")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<int?>("LoanID")
                         .HasColumnType("int");
@@ -121,7 +110,7 @@ namespace EntityFramework.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("UserID")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(95)");
 
                     b.HasKey("Id");
 
@@ -136,19 +125,17 @@ namespace EntityFramework.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("SubBankAccountID"), 1L, 1);
-
                     b.Property<int?>("Balance")
                         .HasColumnType("int");
 
                     b.Property<string>("SubAccountName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<int>("SubBankAccountType")
                         .HasColumnType("int");
 
                     b.Property<string>("UsersUserID")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(95)");
 
                     b.HasKey("SubBankAccountID");
 
@@ -163,22 +150,20 @@ namespace EntityFramework.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
                     b.Property<string>("balance")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<DateTime>("date")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<string>("money")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("reciver")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("userID")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(95)");
 
                     b.HasKey("Id");
 
@@ -190,7 +175,7 @@ namespace EntityFramework.Migrations
             modelBuilder.Entity("EntityFramework.Models.Users", b =>
                 {
                     b.Property<string>("UserID")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(95)");
 
                     b.Property<int?>("Balance")
                         .HasColumnType("int");
@@ -200,16 +185,16 @@ namespace EntityFramework.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Firstname")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Lastname")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Username")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.HasKey("UserID");
 
@@ -273,32 +258,30 @@ namespace EntityFramework.Migrations
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("int");
 
-                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"), 1L, 1);
-
                             b1.Property<DateTime>("Created")
-                                .HasColumnType("datetime2");
+                                .HasColumnType("datetime");
 
                             b1.Property<string>("CreatedByIp")
-                                .HasColumnType("nvarchar(max)");
+                                .HasColumnType("longtext");
 
                             b1.Property<DateTime>("Expires")
-                                .HasColumnType("datetime2");
+                                .HasColumnType("datetime");
 
                             b1.Property<string>("ReplaceByToken")
-                                .HasColumnType("nvarchar(max)");
+                                .HasColumnType("longtext");
 
                             b1.Property<DateTime?>("Revoked")
-                                .HasColumnType("datetime2");
+                                .HasColumnType("datetime");
 
                             b1.Property<string>("RevokedByIp")
-                                .HasColumnType("nvarchar(max)");
+                                .HasColumnType("longtext");
 
                             b1.Property<string>("Token")
-                                .HasColumnType("nvarchar(max)");
+                                .HasColumnType("longtext");
 
                             b1.Property<string>("UsersUserID")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(450)");
+                                .HasColumnType("varchar(95)");
 
                             b1.HasKey("Id");
 

@@ -14,9 +14,9 @@ var MyAllowSpecificOrigins = "AllowOrigin";
 var config = builder.Configuration;
 
 builder.Services.AddControllers();
-//builder.Services.AddDbContext<MyContext>(opt => opt
-//                .UseLazyLoadingProxies()
-//                .UseMySql(config.GetConnectionString("mysql"), new MySqlServerVersion(new Version())));
+builder.Services.AddDbContext<MyContext>(opt => opt
+                .UseLazyLoadingProxies()
+                .UseMySql(config.GetConnectionString("mysql"), new MySqlServerVersion(new Version())), ServiceLifetime.Transient);
 
 builder.Services.AddDbContext<MyContext>(opt => opt
                 .UseLazyLoadingProxies()
